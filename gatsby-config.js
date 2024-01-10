@@ -18,6 +18,14 @@ module.exports = {
 				displayName: process.env.production ? false : true,
 			},
 		},
+		[
+			"babel-plugin-styled-components",
+			{
+				minify: process.env.production ? true : false,
+				transpileTemplateLiterals: process.env.production ? true : false,
+				ssr: true,
+			},
+		],
 		// Data Configuration
 		"gatsby-transformer-remark",
 		{
