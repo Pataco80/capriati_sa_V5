@@ -1,7 +1,6 @@
 import "@fontsource-variable/noto-sans-jp"
 import "@fontsource-variable/roboto-flex"
 import { GlobalStyle } from "./src/theme/globalStyles"
-import { MenuContextProvider } from "./src/context/context"
 const React = require("react")
 const Layout = require("./src/components/Layout/Layout").default
 
@@ -11,10 +10,7 @@ export const wrapRootElement = ({ element }) => {
 	return (
 		<>
 			<GlobalStyle />
-			<MenuContextProvider>
-				<p>is root</p>
-				{element}
-			</MenuContextProvider>
+			{element}
 		</>
 	)
 }
