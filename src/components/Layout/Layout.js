@@ -1,9 +1,13 @@
 import React from "react"
-import { NavBar } from "../index"
+import Navbar from "../NavBar/NavBar"
+
+import * as S from "./LayoutStyled"
+
 const Layout = ({ children }) => {
 	return (
 		<>
-			<NavBar />
+			<p>is Layout</p>
+			<Navbar />
 			{children}
 		</>
 	)

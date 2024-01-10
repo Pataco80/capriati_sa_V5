@@ -18,12 +18,65 @@ module.exports = {
 				displayName: process.env.production ? false : true,
 			},
 		},
+		// Data Configuration
+		"gatsby-transformer-remark",
 		{
-			resolve: `gatsby-source-graphql`,
+			resolve: `gatsby-source-airtable`,
 			options: {
-				fieldName: `graphCmsData`,
-				url: `https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cloiri6mk0sja01t64cahfsbc/master`,
-				typeName: `GraphCMS`,
+				apiKey: process.env.AIRTABLE_API_USER_KEY_TOKEN, // may instead specify via env, see below
+				concurrency: 5, // default, see using markdown and attachments for more information
+				tables: [
+					// Liste des Employés Database
+					{
+						baseId: process.env.AIRTABLE_TEAM_DATABASE_ID,
+						tableName: `Team`,
+						mapping: { teamPhoto: `fileNode` }, // optional, e.g. "text/markdown", "fileNode"
+					},
+
+					// Données de Site Database
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `Services`,
+						mapping: {
+							serviceIcon: `fileNode`,
+							serviceDescriptions: `text/markdown`,
+							serviceFeatureImg: `fileNode`,
+							serviceGallery: `fileNode`,
+							serviceImg1: `fileNode`,
+							serviceImg2: `fileNode`,
+							serviceImg3: `fileNode`,
+						}, // optional, e.g. "text/markdown", "fileNode"
+						tableLinks: [`Gallerie`, `Travaux`],
+					},
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `Gallerie`,
+						mapping: {
+							galleryImage: `fileNode`,
+						}, // optional, e.g. "text/markdown", "fileNode"
+						tableLinks: [`Services`, `Travaux`],
+					},
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `Travaux`,
+						tableLinks: [`Services`, `Gallerie`],
+					},
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `References`,
+					},
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `Historique`,
+					},
+					{
+						baseId: process.env.AIRTABLE_SITE_DATABASE_ID,
+						tableName: `Partenaires`,
+						mapping: {
+							partenaireLogo: `fileNode`,
+						}, // optional, e.g. "text/markdown", "fileNode"
+					},
+				],
 			},
 		},
 		{
